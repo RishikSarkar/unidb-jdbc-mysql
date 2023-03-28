@@ -1,0 +1,6 @@
+INSERT INTO Departments (name, campus) VALUES ('Bio', 'Busch');
+INSERT INTO Departments (name, campus) VALUES ('Chem', 'Livi');
+INSERT INTO Departments (name, campus) VALUES ('CS', 'CAC');
+INSERT INTO Departments (name, campus) VALUES ('Eng', 'CD');
+INSERT INTO Departments (name, campus) VALUES ('Math', 'CAC');
+INSERT INTO Departments (name, campus) VALUES ('Phys', 'Busch');
