@@ -1,6 +1,7 @@
 import java.sql.*;
 import java.util.Scanner;
 
+@SuppressWarnings("resource")
 public class UniDB {
 
     private static String degreeName(String dname) {
@@ -25,8 +26,13 @@ public class UniDB {
 
             System.out.println("ID: " + sid);
 
+            ResultSet majCount = stmt.executeQuery("SELECT COUNT(dname) FROM Majors WHERE sid=" + sid);
+            majCount.next();
+            int majorCount = majCount.getInt(1);
+
             ResultSet maj = stmt.executeQuery("SELECT dname FROM Majors WHERE sid=" + sid);
-            if (maj.isLast()) {
+            if (majorCount == 1) {
+                maj.next();
                 System.out.println("Major: " + degreeName(maj.getString(1)));
             } else {
                 String major = "";
@@ -40,8 +46,13 @@ public class UniDB {
                 System.out.println(major);
             }
 
+            ResultSet minCount = stmt.executeQuery("SELECT COUNT(dname) FROM Minors WHERE sid=" + sid);
+            minCount.next();
+            int minorCount = minCount.getInt(1);
+
             ResultSet min = stmt.executeQuery("SELECT dname FROM Minors WHERE sid=" + sid);
-            if (min.isLast()) {
+            if (minorCount == 1) {
+                min.next();
                 System.out.println("Minor: " + min.getString(1));
             } else {
                 String minor = "";
@@ -83,9 +94,6 @@ public class UniDB {
                 return 0;
         }
     }
-
-    // select distinct grade, count(grade) from hastaken group by grade;
-    // select count(grade) from hastaken;
 
     private static double getGPA(int sid) {
         double gpa = 0;
@@ -144,17 +152,32 @@ public class UniDB {
             Connection con = DriverManager.getConnection("jdbc:mysql://localhost/hw3", "root", "Neongourami123!");
 
             Statement stmt = con.createStatement();
-            ResultSet rs = stmt.executeQuery("select * from students");
+
+            Scanner scan = new Scanner(System.in);
+            System.out.println("Please enter the name.");
+            String name = scan.nextLine();
+
+            ResultSet count = stmt
+                    .executeQuery("SELECT COUNT(S.id) FROM Students S WHERE LOWER(first_name) LIKE '%" + name
+                            + "%' OR LOWER(last_name) LIKE '%" + name + "%'");
+
+            System.out.println();
+            count.next();
+            System.out.println(count.getInt(1) + " students found\n");
+
+            ResultSet rs = stmt.executeQuery("SELECT S.id FROM Students S WHERE LOWER(first_name) LIKE '%" + name
+                    + "%' OR LOWER(last_name) LIKE '%" + name + "%'");
+
             while (rs.next()) {
-                formatStudent(rs.getInt(3));
+                formatStudent(rs.getInt(1));
             }
+
             con.close();
         } catch (Exception e) {
             System.out.println(e);
         }
     }
 
-    @SuppressWarnings("resource")
     private static int runQuery() {
         Scanner scan = new Scanner(System.in);
         System.out.println("Which query would you like to run (1-8)?");
