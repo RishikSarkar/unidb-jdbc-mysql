@@ -76,24 +76,24 @@ public class UniDB {
         }
     }
 
-    private static int gradePoints(String grade) {
-        grade = grade.toLowerCase();
+    // private static int gradePoints(String grade) {
+    // grade = grade.toLowerCase();
 
-        switch (grade) {
-            case "a":
-                return 4;
-            case "b":
-                return 3;
-            case "c":
-                return 2;
-            case "d":
-                return 1;
-            case "f":
-                return 0;
-            default:
-                return 0;
-        }
-    }
+    // switch (grade) {
+    // case "a":
+    // return 4;
+    // case "b":
+    // return 3;
+    // case "c":
+    // return 2;
+    // case "d":
+    // return 1;
+    // case "f":
+    // return 0;
+    // default:
+    // return 0;
+    // }
+    // }
 
     private static double getGPA(int sid) {
         double gpa = 0;
@@ -102,17 +102,25 @@ public class UniDB {
             Connection con = DriverManager.getConnection("jdbc:mysql://localhost/hw3", "root", "Neongourami123!");
 
             Statement stmt = con.createStatement();
-            ResultSet rs = stmt.executeQuery(
-                    "SELECT H.grade, C.credits FROM HasTaken H LEFT JOIN Classes C ON H.name=C.name WHERE H.sid="
-                            + sid);
 
-            double gradePointSum = 0;
-            double totalCredits = 0;
-            while (rs.next()) {
-                gradePointSum += gradePoints(rs.getString(1)) * rs.getInt(2);
-                totalCredits += rs.getInt(2);
-            }
-            gpa = gradePointSum / totalCredits * 1.0;
+            // ResultSet rs = stmt.executeQuery(
+            // "SELECT H.grade, C.credits FROM HasTaken H LEFT JOIN Classes C ON
+            // H.name=C.name WHERE H.sid="
+            // + sid);
+
+            // double gradePointSum = 0;
+            // double totalCredits = 0;
+            // while (rs.next()) {
+            // gradePointSum += gradePoints(rs.getString(1)) * rs.getInt(2);
+            // totalCredits += rs.getInt(2);
+            // }
+            // gpa = gradePointSum / totalCredits * 1.0;
+
+            ResultSet rs = stmt.executeQuery(
+                    "SELECT SUM(H.grade_points*C.credits)/SUM(C.credits) AS gpa FROM (SELECT CASE WHEN H2.grade='A' THEN 4 WHEN H2.grade='B' THEN 3 WHEN H2.grade='C' THEN 2 WHEN H2.grade='D' THEN 1 ELSE 0 END AS grade_points, H2.* FROM HasTaken H2)H LEFT JOIN Classes C ON H.name=C.name WHERE H.sid="
+                            + sid);
+            rs.next();
+            gpa = rs.getDouble(1);
 
             con.close();
         } catch (Exception e) {
@@ -130,12 +138,11 @@ public class UniDB {
 
             Statement stmt = con.createStatement();
             ResultSet rs = stmt.executeQuery(
-                    "SELECT C.credits FROM HasTaken H LEFT JOIN Classes C ON H.name=C.name WHERE H.sid="
+                    "SELECT SUM(C.credits) FROM HasTaken H LEFT JOIN Classes C ON H.name=C.name WHERE H.sid="
                             + sid + " AND H.grade != 'F'");
 
-            while (rs.next()) {
-                totalCredits += rs.getInt(1);
-            }
+            rs.next();
+            totalCredits = rs.getInt(1);
 
             con.close();
         } catch (Exception e) {
@@ -178,6 +185,103 @@ public class UniDB {
         }
     }
 
+    // Query 2
+    private static void searchYear() {
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            Connection con = DriverManager.getConnection("jdbc:mysql://localhost/hw3", "root", "Neongourami123!");
+
+            Statement stmt = con.createStatement();
+
+            Scanner scan = new Scanner(System.in);
+            System.out.println("Please enter the year.");
+            String name = scan.nextLine();
+
+            int minCredits = 0;
+            int maxCredits = 0;
+            name = name.toLowerCase();
+
+            switch (name) {
+                case "fr":
+                    minCredits = 0;
+                    maxCredits = 29;
+                    break;
+                case "so":
+                    minCredits = 30;
+                    maxCredits = 59;
+                    break;
+                case "ju":
+                    minCredits = 60;
+                    maxCredits = 89;
+                    break;
+                case "sr":
+                    minCredits = 90;
+                    maxCredits = Integer.MAX_VALUE;
+                    break;
+                default:
+                    System.out.println("Please enter a valid year!");
+                    searchYear();
+                    return;
+            }
+
+            ResultSet count = stmt.executeQuery(
+                    "SELECT COUNT(CT.sid) FROM (SELECT H.sid AS sid, SUM(C.credits) AS total_credits FROM (SELECT * FROM HasTaken WHERE grade != 'F')H LEFT JOIN Classes C ON H.name=C.name GROUP BY H.sid)CT WHERE CT.total_credits >= "
+                            + minCredits + " AND CT.total_credits <= " + maxCredits);
+
+            System.out.println();
+            count.next();
+            System.out.println(count.getInt(1) + " students found\n");
+
+            ResultSet rs = stmt.executeQuery(
+                    "SELECT CT.sid FROM (SELECT H.sid AS sid, SUM(C.credits) AS total_credits FROM (SELECT * FROM HasTaken WHERE grade != 'F')H LEFT JOIN Classes C ON H.name=C.name GROUP BY H.sid)CT WHERE CT.total_credits >= "
+                            + minCredits + " AND CT.total_credits <= " + maxCredits);
+
+            while (rs.next()) {
+                formatStudent(rs.getInt(1));
+            }
+
+            con.close();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
+
+    // Queries 3 + 4
+    private static void searchGPA(int belowOrAbove) {
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            Connection con = DriverManager.getConnection("jdbc:mysql://localhost/hw3", "root", "Neongourami123!");
+
+            Statement stmt = con.createStatement();
+
+            Scanner scan = new Scanner(System.in);
+            System.out.println("Please enter the threshold.");
+            double threshold = scan.nextDouble();
+            scan.nextLine();
+
+            if (belowOrAbove == 1) {
+                ResultSet count = stmt.executeQuery(null);
+
+                System.out.println();
+                count.next();
+                System.out.println(count.getInt(1) + " students found\n");
+
+                ResultSet rs = stmt.executeQuery(
+                        "SELECT S.id AS sid, SUM(H.grade_points*C.credits)/SUM(C.credits) AS gpa FROM Students S, (SELECT CASE WHEN H2.grade='A' THEN 4 WHEN H2.grade='B' THEN 3 WHEN H2.grade='C' THEN 2 WHEN H2.grade='D' THEN 1 ELSE 0 END AS grade_points, H2.* FROM HasTaken H2)H LEFT JOIN Classes C ON H.name=C.name WHERE H.sid=S.id GROUP BY S.id");
+
+                while (rs.next()) {
+                    formatStudent(rs.getInt(1));
+                }
+            } else {
+
+            }
+
+            con.close();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
+
     private static int runQuery() {
         Scanner scan = new Scanner(System.in);
         System.out.println("Which query would you like to run (1-8)?");
@@ -189,11 +293,13 @@ public class UniDB {
                 searchName();
                 break;
             case 2:
-                System.out.println("2");
+                searchYear();
                 break;
             case 3:
+                searchGPA(1);
                 break;
             case 4:
+                searchGPA(0);
                 break;
             case 5:
                 break;
