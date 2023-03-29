@@ -260,20 +260,37 @@ public class UniDB {
             scan.nextLine();
 
             if (belowOrAbove == 1) {
-                ResultSet count = stmt.executeQuery(null);
+                ResultSet count = stmt.executeQuery(
+                        "SELECT COUNT(G.sid) FROM (SELECT S.id AS sid, SUM(H.grade_points*C.credits)/SUM(C.credits) AS gpa FROM Students S, (SELECT CASE WHEN H2.grade='A' THEN 4 WHEN H2.grade='B' THEN 3 WHEN H2.grade='C' THEN 2 WHEN H2.grade='D' THEN 1 ELSE 0 END AS grade_points, H2.* FROM HasTaken H2)H LEFT JOIN Classes C ON H.name=C.name WHERE H.sid=S.id GROUP BY S.id)G WHERE G.gpa >= "
+                                + threshold);
 
                 System.out.println();
                 count.next();
                 System.out.println(count.getInt(1) + " students found\n");
 
                 ResultSet rs = stmt.executeQuery(
-                        "SELECT S.id AS sid, SUM(H.grade_points*C.credits)/SUM(C.credits) AS gpa FROM Students S, (SELECT CASE WHEN H2.grade='A' THEN 4 WHEN H2.grade='B' THEN 3 WHEN H2.grade='C' THEN 2 WHEN H2.grade='D' THEN 1 ELSE 0 END AS grade_points, H2.* FROM HasTaken H2)H LEFT JOIN Classes C ON H.name=C.name WHERE H.sid=S.id GROUP BY S.id");
+                        "SELECT G.sid FROM (SELECT S.id AS sid, SUM(H.grade_points*C.credits)/SUM(C.credits) AS gpa FROM Students S, (SELECT CASE WHEN H2.grade='A' THEN 4 WHEN H2.grade='B' THEN 3 WHEN H2.grade='C' THEN 2 WHEN H2.grade='D' THEN 1 ELSE 0 END AS grade_points, H2.* FROM HasTaken H2)H LEFT JOIN Classes C ON H.name=C.name WHERE H.sid=S.id GROUP BY S.id)G WHERE G.gpa >= "
+                                + threshold);
 
                 while (rs.next()) {
                     formatStudent(rs.getInt(1));
                 }
             } else {
+                ResultSet count = stmt.executeQuery(
+                        "SELECT COUNT(G.sid) FROM (SELECT S.id AS sid, SUM(H.grade_points*C.credits)/SUM(C.credits) AS gpa FROM Students S, (SELECT CASE WHEN H2.grade='A' THEN 4 WHEN H2.grade='B' THEN 3 WHEN H2.grade='C' THEN 2 WHEN H2.grade='D' THEN 1 ELSE 0 END AS grade_points, H2.* FROM HasTaken H2)H LEFT JOIN Classes C ON H.name=C.name WHERE H.sid=S.id GROUP BY S.id)G WHERE G.gpa <= "
+                                + threshold);
 
+                System.out.println();
+                count.next();
+                System.out.println(count.getInt(1) + " students found\n");
+
+                ResultSet rs = stmt.executeQuery(
+                        "SELECT G.sid FROM (SELECT S.id AS sid, SUM(H.grade_points*C.credits)/SUM(C.credits) AS gpa FROM Students S, (SELECT CASE WHEN H2.grade='A' THEN 4 WHEN H2.grade='B' THEN 3 WHEN H2.grade='C' THEN 2 WHEN H2.grade='D' THEN 1 ELSE 0 END AS grade_points, H2.* FROM HasTaken H2)H LEFT JOIN Classes C ON H.name=C.name WHERE H.sid=S.id GROUP BY S.id)G WHERE G.gpa <= "
+                                + threshold);
+
+                while (rs.next()) {
+                    formatStudent(rs.getInt(1));
+                }
             }
 
             con.close();
@@ -282,6 +299,174 @@ public class UniDB {
         }
     }
 
+    // Query 5
+    private static void searchDepartment() {
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            Connection con = DriverManager.getConnection("jdbc:mysql://localhost/hw3", "root", "Neongourami123!");
+
+            Statement stmt = con.createStatement();
+
+            Scanner scan = new Scanner(System.in);
+            System.out.println("Please enter the department.");
+            String dept = scan.nextLine();
+
+            dept = dept.toLowerCase();
+
+            if (!dept.equals("bio") &&
+                    !dept.equals("chem") &&
+                    !dept.equals("cs") &&
+                    !dept.equals("eng") &&
+                    !dept.equals("math") &&
+                    !dept.equals("phys")) {
+                System.out.println("Please enter a valid department!");
+                searchDepartment();
+                return;
+            }
+
+            System.out.println();
+            ResultSet rs = stmt.executeQuery("SELECT COUNT(G.sid) AS student_count, AVG(G.gpa) AS avg_gpa FROM (" +
+                    "SELECT S.id AS sid, SUM(H.grade_points*C.credits)/SUM(C.credits) AS gpa FROM (" +
+                    "SELECT DISTINCT S2.id FROM Students S2 WHERE EXISTS (" +
+                    "SELECT Maj.sid FROM Majors Maj WHERE Maj.dname='" + dept + "' AND Maj.sid=S2.id) " +
+                    "OR EXISTS (" +
+                    "SELECT Min.sid FROM Minors Min WHERE Min.dname='" + dept + "' AND Min.sid=S2.id))S, " +
+                    "(SELECT CASE " +
+                    "WHEN H2.grade='A' THEN 4 " +
+                    "WHEN H2.grade='B' THEN 3 " +
+                    "WHEN H2.grade='C' THEN 2 " +
+                    "WHEN H2.grade='D' THEN 1 " +
+                    "ELSE 0 " +
+                    "END AS grade_points, H2.* FROM HasTaken H2)H " +
+                    "LEFT JOIN Classes C ON H.name=C.name WHERE H.sid=S.id " +
+                    "GROUP BY S.id)G;");
+            rs.next();
+            System.out.println("Num students: " + rs.getInt(1));
+            System.out.println("Average GPA: " + rs.getFloat(2));
+            System.out.println();
+
+            con.close();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
+
+    // Query 6
+    private static void searchClass() {
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            Connection con = DriverManager.getConnection("jdbc:mysql://localhost/hw3", "root", "Neongourami123!");
+
+            Statement stmt = con.createStatement();
+
+            Scanner scan = new Scanner(System.in);
+            System.out.println("Please enter the class name.");
+            String className = scan.nextLine();
+
+            className = className.toLowerCase();
+
+            System.out.println();
+
+            ResultSet currentCount = stmt.executeQuery(
+                    "SELECT COUNT(DISTINCT IT.sid) AS curr_count FROM IsTaking IT WHERE LOWER(IT.name) LIKE '%"
+                            + className + "%'");
+            currentCount.next();
+            System.out.println(currentCount.getInt(1) + " students currently enrolled");
+            System.out.println();
+
+            ResultSet prevGrades = stmt.executeQuery(
+                    "SELECT DISTINCT HT.grade, COUNT(HT.grade) AS count FROM HasTaken HT WHERE LOWER(HT.name) LIKE '%"
+                            + className + "%' GROUP BY HT.grade ORDER BY HT.grade ASC");
+
+            System.out.println("Grades of previous enrollees:");
+
+            String[] letterList = new String[] { "A", "B", "C", "D", "F" };
+            int[] gradeList = new int[] { 0, 0, 0, 0, 0 };
+            int counter = 0;
+
+            while (prevGrades.next()) {
+                while (counter < 4 && !prevGrades.getString(1).equalsIgnoreCase(letterList[counter])) {
+                    counter++;
+                }
+                gradeList[counter] = prevGrades.getInt(2);
+                counter++;
+            }
+
+            for (int i = 0; i < 5; i++) {
+                System.out.println(letterList[i] + " " + gradeList[i]);
+            }
+            System.out.println();
+
+            con.close();
+        } catch (
+
+        Exception e) {
+            System.out.println(e);
+        }
+    }
+
+    // Query 7
+    private static void arbitraryQuery() {
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            Connection con = DriverManager.getConnection("jdbc:mysql://localhost/hw3", "root", "Neongourami123!");
+
+            Statement stmt = con.createStatement();
+
+            Scanner scan = new Scanner(System.in);
+            System.out.println("Please enter the query.");
+            String query = scan.nextLine();
+
+            System.out.println();
+
+            ResultSet rs = stmt.executeQuery(query);
+            ResultSetMetaData rsmd = rs.getMetaData();
+
+            int cols = rsmd.getColumnCount();
+
+            String row = "";
+            for (int i = 1; i <= cols; i++) {
+                row += rsmd.getColumnLabel(i) + "\t";
+            }
+            System.out.println(row);
+
+            int[] colTypes = new int[cols];
+
+            for (int i = 1; i <= cols; i++) {
+                colTypes[i - 1] = rsmd.getColumnType(i);
+            }
+
+            while (rs.next()) {
+                row = "";
+
+                for (int i = 1; i <= cols; i++) {
+                    int type = colTypes[i - 1];
+
+                    if (type == Types.VARCHAR || type == Types.CHAR) {
+                        row += rs.getString(i) + "\t";
+                    } else if (type == Types.INTEGER) {
+                        row += rs.getInt(i) + "\t";
+                    } else if (type == Types.DOUBLE) {
+                        row += rs.getDouble(i) + "\t";
+                    } else if (type == Types.FLOAT) {
+                        row += rs.getFloat(i) + "\t";
+                    } else {
+                        row += rs.getObject(i) + "\t";
+                    }
+                }
+
+                System.out.println(row);
+            }
+
+            System.out.println();
+
+            con.close();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
+
+    // Method to Run Application
     private static int runQuery() {
         Scanner scan = new Scanner(System.in);
         System.out.println("Which query would you like to run (1-8)?");
@@ -302,10 +487,13 @@ public class UniDB {
                 searchGPA(0);
                 break;
             case 5:
+                searchDepartment();
                 break;
             case 6:
+                searchClass();
                 break;
             case 7:
+                arbitraryQuery();
                 break;
             case 8:
                 System.out.println("Goodbye.");
