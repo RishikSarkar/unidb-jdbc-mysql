@@ -87,12 +87,12 @@ Steps for random allocation of classes into *IsTaking* and *HasTaken*.
 
 ### Writing Queries to Text Files
 Wrote the *SQL INSERT Query* commands for all relevant *SQL Tables* into their respective text files:
-* Departments &rarr; **departments.txt**
-* Students &rarr; **students.txt**
-* Classes &rarr; **classes.txt**
-* Majors &rarr; **majors.txt**
-* Minors &rarr; **minors.txt**
-* IsTaking &rarr; **istaking.txt**
-* HasTaken &rarr; **hastaken.txt**
+* *Departments* &rarr; **departments.txt**
+* *Students* &rarr; **students.txt**
+* *Classes* &rarr; **classes.txt**
+* *Majors* &rarr; **majors.txt**
+* *Minors* &rarr; **minors.txt**
+* *IsTaking* &rarr; **istaking.txt**
+* *HasTaken* &rarr; **hastaken.txt**
 
 ------------------------
