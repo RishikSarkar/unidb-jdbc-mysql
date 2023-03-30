@@ -70,7 +70,7 @@ Steps for random allocation of classes into *IsTaking* and *HasTaken*.
     * 10 As, 6 Bs, 3 Cs, 1 D, 1 F
       * Thus, **P(A) = 0.48, P(B) = 0.29, P(C) = 0.14, P(D) = P(F) = 0.05**
     * This was done to increase the chances of getting certain grades over others in order to positively skew student GPAs: and cause the average GPA to be close to **3.1**
-    * Without modifying probabilities, the average GPA was around **2.0**, which appeared unrealistic
+    * Without modifying probabilities, the average GPA was around **2.0**--which seemed unrealistically low
 * 
     
 
