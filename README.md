@@ -69,9 +69,12 @@ Steps for random allocation of classes into *IsTaking* and *HasTaken*.
   * Created list *possible_grades* containing letter grades **'A', 'B', 'C', 'D',** and **'F'** in varying quantities
     * 10 As, 6 Bs, 3 Cs, 1 D, 1 F
       * Thus, **P(A) = 0.48, P(B) = 0.29, P(C) = 0.14, P(D) = P(F) = 0.05**
-    * This was done to increase the chances of getting certain grades over others in order to positively skew student GPAs: and cause the average GPA to be close to **3.1**
+    * This was done to increase the chances of getting certain grades over others in order to positively skew student GPAs: and cause the average GPA to be close to **3.15**
     * Without modifying probabilities, the average GPA was around **2.0**--which seemed unrealistic
 * Class Count Generation:
   * Created list *has_taken_count* containing student ids and a random integer between 0 and 34 (inclusive)
     * Total credits *t* is: 0 <= *t* < 120, thus total classes *c* is around: 0 <= *c* < 35, since there are an average of 3.5 credits per course and 120 / 3.5 = 35
   * Verified that the number of *FR, SO, JR,* and *SR* were approximately equal
+* For each student in *has_taken_count*, generated a random list of unique classes (additionally verifying with *is_taking*) and a random letter grade from *possible_grades*
+  * Ensured that the average GPA was around **3.15** and verified that the students were equally distributed into each school year
+  * *Pickle dumped* 
