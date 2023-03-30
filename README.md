@@ -50,4 +50,8 @@ All the relevant source code can be found in **Random Data Generator.ipynb**.
 * Made sure that the scraped course names were unique and properly formatted as Strings in the form [ *01:XXX:XXX course_name* ]
 * Aggregated data from all class lists into *courses*
 * Randomly allocated a *credit* count (either 3 or 4) to each course in *courses* and stored final list as *courses_list*
+* *Pickle dumped* list of classes into **course-names.ob**
+* Created list of commands *classes_cmd_list* and stored the relevant SQL INSERT Query String for each course in *courses*
+* *Pickle dumped* list of commands into **classes-cmd-list.ob**
+
 
