@@ -5,10 +5,10 @@ This is a README file describing the MySQL Database Random Data Generation and L
 ------------------------
 
 ## Random Data Generation
-* All random data generation and scraping was done using Python, Jupyter Notebook, and Beautiful Soup. 
-* All the relevant source code can be found in **Random Data Generator.ipynb**.
-* All *pickle* **.ob** files can be found in the **data** Folder.
-* All SQL Query **.txt** files can be found in the **query** Folder.
+* All random data generation and scraping was done using Python, Jupyter Notebook, and Beautiful Soup
+* All the relevant source code can be found in **Random Data Generator.ipynb**
+* All *pickle* **.ob** files can be found in the **data** Folder
+* All *SQL INSERT Query* **.txt** files can be found in the **query** Folder
 
 ------------------------
 
@@ -16,7 +16,7 @@ This is a README file describing the MySQL Database Random Data Generation and L
 * Read data from two text files *first-names.txt* and *last-names.txt* that were obtained from the internet
 * Used the Python *random* module to generate a list of 100 random first and last name combinations, and generated a 9-digit id for each student
   * Verified that id was unique for each student during generation
-* Formatted the *first_name*, *last_name*, and *id* of each student into a String resembling a SQL INSERT Query and stored as a list
+* Formatted the *first_name*, *last_name*, and *id* of each student into a String resembling a *SQL INSERT Query* and stored as a list
 * *Pickle dumped* list of commands into **student-cmd-list.ob**
 
 ------------------------
@@ -27,13 +27,13 @@ This is a README file describing the MySQL Database Random Data Generation and L
   * Both randomized numbers are **between 1 and 2 (inclusive)**
   * *Pickle dumped* list into **degree-count.ob**
 #### Majors
-* Created list *major_cmd_list* to hold SQL INSERT Query Strings for student majors
-* For every *id* and its respective major count in *dept_list*, generated random department name(s) from *dept_list* and added SQL INSERT Query String to *major_cmd_list*
+* Created list *major_cmd_list* to hold *SQL INSERT Query* Strings for student majors
+* For every *id* and its respective major count in *dept_list*, generated random department name(s) from *dept_list* and added *SQL INSERT Query* String to *major_cmd_list*
   * Ensured that major names were not duplicates, since a student cannot have two majors in the same field
 * *Pickle dumped* list of commands into **majors-cmd-list.ob**
 * Created a dictionary of generated majors for each student id, called *major_dict*
 #### Minors
-* Created list *minor_cmd_list* to hold SQL INSERT Query Strings for student minors
+* Created list *minor_cmd_list* to hold *SQL INSERT Query* Strings for student minors
 * Same process as **random major generation**, as outlined above
   * Ensured that a student's minors were unique: not duplicates of each other, or the student's majors (verified using *major_dict*)
 * *Pickle dumped* list of commands into **minors-cmd-list.ob**
@@ -53,7 +53,7 @@ This is a README file describing the MySQL Database Random Data Generation and L
   * Aggregated data from all class lists into *courses*
 * Randomly allocated a *credit* count (either 3 or 4) to each course in *courses* and stored final list as *courses_list*
   * *Pickle dumped* list of classes into **course-names.ob**
-* Created list of commands *classes_cmd_list* and stored the relevant SQL INSERT Query String for each course in *courses*
+* Created list of commands *classes_cmd_list* and stored the relevant *SQL INSERT Query* String for each course in *courses*
   * *Pickle dumped* list of commands into **classes-cmd-list.ob**
 
 ------------------------
@@ -64,7 +64,7 @@ Steps for random allocation of classes into *IsTaking* and *HasTaken*.
 * Created a list containing *student ids* and a random number of *current classes* (4 or 5) called *is_taking_count*
 * For each student in *is_taking_count*, generated a random list of either 4 or 5 unique classes, and stored every *student-classes* pair within a dictionary *is_taking*
   * *Pickle dumped* dictionary into **is-taking-list.ob**
-* Generated SQL INSERT Query Strings for each student-class pair (one statement for every class per student) in *is_taking*, and stored commands in *is_taking_cmd_list*
+* Generated *SQL INSERT Query* Strings for each student-class pair (one statement for every class per student) in *is_taking*, and stored commands in *is_taking_cmd_list*
   * *Pickle dumped* list of commands into **istaking-cmd-list.ob**
 #### Random HasTaken Classes:
 * Letter Grade List Generation:
@@ -80,7 +80,7 @@ Steps for random allocation of classes into *IsTaking* and *HasTaken*.
 * For each student in *has_taken_count*, generated a random list of unique classes (additionally verifying with *is_taking*) and a random letter grade from *possible_grades* and stored aggregate as list *has_taken*
   * Ensured that the average GPA was around **3.15** and verified that the students were equally distributed into each school year
   * *Pickle dumped* list of past classes into **has-taken-list.ob**
-* Generated SQL INSERT Query Strings for each student-class pair (one statement for every class per student) in *has_taken*, and stored commands in *has_taken_cmd_list*
+* Generated *SQL INSERT Query* Strings for each student-class pair (one statement for every class per student) in *has_taken*, and stored commands in *has_taken_cmd_list*
   * *Pickle dumped* list of commands into **hastaken-cmd-list.ob**
 
 ------------------------
