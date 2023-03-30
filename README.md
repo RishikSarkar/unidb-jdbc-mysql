@@ -39,4 +39,7 @@ All the relevant source code can be found in **Random Data Generator.ipynb**.
 ------------------------
 
 ### Generating List of Classes:
-* Created list *courses* to 
+* Created list *courses* to store classes from all departments
+* Used *Beautiful Soup* and *requests* to scrape course data from relevant **Rutgers University Course Descriptions** websites for each department:
+  * [Bio](https://biology.camden.rutgers.edu/undergraduate-program/undergraduate-course-descriptions/)
+  * 
