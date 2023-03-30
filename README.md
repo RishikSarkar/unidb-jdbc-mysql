@@ -38,4 +38,5 @@ All the relevant source code can be found in **Random Data Generator.ipynb**.
 
 ------------------------
 
-
+### Generating List of Classes:
+* Created list *courses* to 
