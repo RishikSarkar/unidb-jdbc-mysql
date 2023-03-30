@@ -34,4 +34,8 @@ All the relevant source code can be found in **Random Data Generator.ipynb**.
 * Created list *minor_cmd_list* to hold SQL INSERT Query Strings for student minors
 * Same process as **random major generation**, as outlined above
   * Ensured that a student's minors were unique: not duplicates of each other, or the student's majors (verified using *major_dict*)
-  
+* *Pickled* list of commands into **minors-cmd-list.ob**
+
+------------------------
+
+
