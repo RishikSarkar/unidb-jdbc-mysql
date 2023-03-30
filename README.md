@@ -6,7 +6,11 @@ This is a README file describing the MySQL Database Random Data Generation and L
 
 ## Random Data Generation
 ### Table of Contents:
-
+* [Generating Random Students](#generating-random-students)
+* [Generating Random Majors/Minors](#generating-random-majorsminors)
+* [Generating List of Classes](#generating-list-of-classes)
+* [Allocating Random Classes to Students](#allocating-random-classes-to-students)
+* [Writing Queries to Text Files](#writing-queries-to-text-files)
 #### Note:
 * All random data generation and scraping was done using Python, Jupyter Notebook, and Beautiful Soup
 * All the relevant source code can be found in **Random Data Generator.ipynb**
