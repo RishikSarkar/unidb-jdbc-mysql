@@ -40,12 +40,14 @@ All the relevant source code can be found in **Random Data Generator.ipynb**.
 
 ### Generating List of Classes:
 * Created list *courses* to store classes from all departments
-* Used *Beautiful Soup* and *requests* to scrape course data from relevant **Rutgers University Course Descriptions** websites for each department:
+* Used *Beautiful Soup* and *requests* to scrape course data from relevant **Rutgers University Course Descriptions** websites into lists for each department:
   * [Biology](https://biology.camden.rutgers.edu/undergraduate-program/undergraduate-course-descriptions/) - *Bio*
   * [Chemistry](https://chem.rutgers.edu/academics/undergraduate-program/undergraduate-course-descriptions) - *Chem*
   * [Computer Science](https://www.cs.rutgers.edu/academics/undergraduate/course-synopses) - *CS*
   * [English](https://english.rutgers.edu/academics/undergraduate-91/undergraduate-course-descriptions/fall-2022/all-course-descriptions-fall-2022.html) - *Eng*
   * [Mathematics](https://www.math.rutgers.edu/academics/undergraduate/courses) - *Math*
   * [Physics](https://physics.camden.rutgers.edu/physics-courses/) - *Phys*
-* Made sure that the scraped course names were properly formatted as Strings in the form [ *01:XXX:XXX course_name* ], and were not duplicate
-* 
+* Made sure that the scraped course names were unique and properly formatted as Strings in the form [ *01:XXX:XXX course_name* ]
+* Aggregated data from all class lists into *courses*
+* Randomly allocated a *credit* count (either 3 or 4) to each course in *courses* and stored final list as *courses_list*
+
