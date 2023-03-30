@@ -71,6 +71,9 @@ Steps for random allocation of classes into *IsTaking* and *HasTaken*.
       * Thus, **P(A) = 0.48, P(B) = 0.29, P(C) = 0.14, P(D) = P(F) = 0.05**
     * This was done to increase the chances of getting certain grades over others in order to positively skew student GPAs: and cause the average GPA to be close to **3.1**
     * Without modifying probabilities, the average GPA was around **2.0**--which seemed unrealistic
-* 
+* Class Count Generation:
+  * Created list *has_taken_count* containing a random integer between 0 and 34 (inclusive)
+    * Total credits *t* is: 0 <= *t* < 120, thus total classes *c* is around: 0 <= *c* < 35, since there are an average of 3.5 credits per course and 120 / 3.5 = 35
+    
     
 
