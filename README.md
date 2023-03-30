@@ -23,7 +23,15 @@ All the relevant source code can be found in **Random Data Generator.ipynb**.
 * Created list *dept_list* containing list of departments: *Bio, Chem, CS, Eng, Math, Phys*
 * Generated a random count of *majors* and *minors* for each student id in the previously created list of students, and saved list as *degree_count*
   * Both randomized numbers are **between 1 and 2 (inclusive)**
-  * *Pickled* list as **degree-count.ob**
+  * *Pickled* list into **degree-count.ob**
 #### Majors
 * Created list *major_cmd_list* to hold SQL INSERT Query Strings for student majors
-* For every *id* and its respective major count in *dept_list* 
+* For every *id* and its respective major count in *dept_list*, generated random department name(s) from *dept_list* and added SQL INSERT Query String to *major_cmd_list*
+  * Ensured that major names were not duplicates, since a student cannot have two majors in the same field
+* *Pickled* list of commands into **majors-cmd-list.ob**
+* Created a dictionary of generated majors for each student id, called *major_dict*
+#### Minors
+* Created list *minor_cmd_list* to hold SQL INSERT Query Strings for student minors
+* Same process as **random major generation**, as outlined above
+  * Ensured that a student's minors were unique: not duplicates of each other, or the student's majors (verified using *major_dict*)
+  
