@@ -62,7 +62,7 @@ Steps for random allocation of classes into *IsTaking* and *HasTaken*.
 * Created a list containing *student ids* and a random number of *current classes* (4 or 5) called *is_taking_count*
 * For each student in *is_taking_count*, generated a random list of either 4 or 5 unique classes, and stored every *student-classes* pair within a dictionary *is_taking*
   * *Pickle dumped* dictionary into **is-taking-list.ob**
-* Generated SQL INSERT Query Strings for each student-class pair (one statement for every class per student) in *student_classes*, and stored commands in *is_taking_cmd_list*
+* Generated SQL INSERT Query Strings for each student-class pair (one statement for every class per student) in *is_taking*, and stored commands in *is_taking_cmd_list*
   * *Pickle dumped* list of commands into **istaking-cmd-list.ob**
 #### Random HasTaken Classes:
 * Letter Grade List Generation:
@@ -75,6 +75,12 @@ Steps for random allocation of classes into *IsTaking* and *HasTaken*.
   * Created list *has_taken_count* containing student ids and a random integer between 0 and 34 (inclusive)
     * Total credits *t* is: 0 <= *t* < 120, thus total classes *c* is around: 0 <= *c* < 35, since there are an average of 3.5 credits per course and 120 / 3.5 = 35
   * Verified that the number of *FR, SO, JR,* and *SR* were approximately equal
-* For each student in *has_taken_count*, generated a random list of unique classes (additionally verifying with *is_taking*) and a random letter grade from *possible_grades*
+* For each student in *has_taken_count*, generated a random list of unique classes (additionally verifying with *is_taking*) and a random letter grade from *possible_grades* and stored aggregate as list *has_taken*
   * Ensured that the average GPA was around **3.15** and verified that the students were equally distributed into each school year
-  * *Pickle dumped* 
+  * *Pickle dumped* list of past classes into **has-taken-list.ob**
+* Generated SQL INSERT Query Strings for each student-class pair (one statement for every class per student) in *has_taken*, and stored commands in *has_taken_cmd_list*
+  * *Pickle dumped* list of commands into **hastaken-cmd-list.ob**
+
+------------------------
+
+
