@@ -7,6 +7,8 @@ This is a README file describing the MySQL Database Random Data Generation and L
 ## Random Data Generation
 All random data generation and scraping was done using Python, Jupyter Notebook, and Beautiful Soup. 
 All the relevant source code can be found in **Random Data Generator.ipynb**.
+All the relevant *pickle* files can be found in the **data** Folder.
+
 
 ------------------------
 
@@ -83,4 +85,5 @@ Steps for random allocation of classes into *IsTaking* and *HasTaken*.
 
 ------------------------
 
+### Writing Queries to Text Files
 
