@@ -54,4 +54,10 @@ All the relevant source code can be found in **Random Data Generator.ipynb**.
 * Created list of commands *classes_cmd_list* and stored the relevant SQL INSERT Query String for each course in *courses*
   * *Pickle dumped* list of commands into **classes-cmd-list.ob**
 
+------------------------
+
+### Allocating Random Classes to Students:
+Steps for random allocation of classes into *IsTaking* and *HasTaken*.
+#### Random IsTaking Classes:
+* Created a list containing *student ids* and a random number of *current classes* (either 4 or 5) called *is_taking_count*
 
