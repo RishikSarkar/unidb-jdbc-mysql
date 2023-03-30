@@ -5,10 +5,10 @@ This is a README file describing the MySQL Database Random Data Generation and L
 ------------------------
 
 ## Random Data Generation
-All random data generation and scraping was done using Python, Jupyter Notebook, and Beautiful Soup. 
-All the relevant source code can be found in **Random Data Generator.ipynb**.
-All the relevant *pickle* files can be found in the **data** Folder.
-
+* All random data generation and scraping was done using Python, Jupyter Notebook, and Beautiful Soup. 
+* All the relevant source code can be found in **Random Data Generator.ipynb**.
+* All *pickle* **.ob** files can be found in the **data** Folder.
+* All SQL Query **.txt** files can be found in the **query** Folder.
 
 ------------------------
 
