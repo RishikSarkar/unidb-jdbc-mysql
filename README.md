@@ -47,4 +47,5 @@ All the relevant source code can be found in **Random Data Generator.ipynb**.
   * [English](https://english.rutgers.edu/academics/undergraduate-91/undergraduate-course-descriptions/fall-2022/all-course-descriptions-fall-2022.html) - *Eng*
   * [Mathematics](https://www.math.rutgers.edu/academics/undergraduate/courses) - *Math*
   * [Physics](https://physics.camden.rutgers.edu/physics-courses/) - *Phys*
+* Made sure that the scraped course names were properly formatted as Strings in the form [ *01:XXX:XXX course_name* ], and were not duplicate
 * 
