@@ -65,5 +65,11 @@ Steps for random allocation of classes into *IsTaking* and *HasTaken*.
 * Generated SQL INSERT Query Strings for each student-class pair (one statement for every class per student) in *student_classes*, and stored commands in *is_taking_cmd_list*
   * *Pickle dumped* list of commands into **istaking-cmd-list.ob**
 #### Random HasTaken Classes:
-
+* Letter Grade List Generation:
+  * Created list *possible_grades* containing letter grades **'A', 'B', 'C', 'D',** and **'F'** in varying quantities
+    * *10 A, 6 B, 3 C, 1 D, 1 F*
+    * This was done to increase the chances of getting certain grades over others in order to positively skew student GPAs: and cause the average GPA to be close to **3.1**
+    * Without modifying probabilities, the average GPA was around **2.0**, which appeared unrealistic
+* 
+    
 
