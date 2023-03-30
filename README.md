@@ -41,10 +41,10 @@ All the relevant source code can be found in **Random Data Generator.ipynb**.
 ### Generating List of Classes:
 * Created list *courses* to store classes from all departments
 * Used *Beautiful Soup* and *requests* to scrape course data from relevant **Rutgers University Course Descriptions** websites for each department:
-  * [Bio](https://biology.camden.rutgers.edu/undergraduate-program/undergraduate-course-descriptions/)
-  * [Chem](https://chem.rutgers.edu/academics/undergraduate-program/undergraduate-course-descriptions)
-  * [CS](https://www.cs.rutgers.edu/academics/undergraduate/course-synopses)
-  * [Eng](https://english.rutgers.edu/academics/undergraduate-91/undergraduate-course-descriptions/fall-2022/all-course-descriptions-fall-2022.html)
-  * [Math](https://www.math.rutgers.edu/academics/undergraduate/courses)
-  * [Phys](https://physics.camden.rutgers.edu/physics-courses/)
+  * [Biology](https://biology.camden.rutgers.edu/undergraduate-program/undergraduate-course-descriptions/) - *Bio*
+  * [Chemistry](https://chem.rutgers.edu/academics/undergraduate-program/undergraduate-course-descriptions) - *Chem*
+  * [Computer Science](https://www.cs.rutgers.edu/academics/undergraduate/course-synopses) - *CS*
+  * [English](https://english.rutgers.edu/academics/undergraduate-91/undergraduate-course-descriptions/fall-2022/all-course-descriptions-fall-2022.html) - *Eng*
+  * [Mathematics](https://www.math.rutgers.edu/academics/undergraduate/courses) - *Math*
+  * [Physics](https://physics.camden.rutgers.edu/physics-courses/) - *Phys*
 * 
