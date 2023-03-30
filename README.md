@@ -59,7 +59,7 @@ All the relevant source code can be found in **Random Data Generator.ipynb**.
 ### Allocating Random Classes to Students:
 Steps for random allocation of classes into *IsTaking* and *HasTaken*.
 #### Random IsTaking Classes:
-* Created a list containing *student ids* and a random number of *current classes* (either 4 or 5) called *is_taking_count*
+* Created a list containing *student ids* and a random number of *current classes* (4 or 5) called *is_taking_count*
 * For each student in *is_taking_count*, generated a random list of either 4 or 5 unique classes, and stored every *student-classes* pair within a dictionary *is_taking*
   * *Pickle dumped* dictionary into **is-taking-list.ob**
 * Generated SQL INSERT Query Strings for each student-class pair (one statement for every class per student) in *student_classes*, and stored commands in *is_taking_cmd_list*
