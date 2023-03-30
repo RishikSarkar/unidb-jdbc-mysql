@@ -4,6 +4,19 @@ import java.util.Scanner;
 @SuppressWarnings("resource")
 public class UniDB {
 
+    public static Connection getConnection() throws SQLException {
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            Connection con = DriverManager.getConnection("jdbc:mysql://localhost/hw3", "root", "Neongourami123!");
+            return con;
+        } catch (Exception e) {
+            System.out.println(e);
+            System.exit(1);
+        }
+
+        return null;
+    }
+
     private static String degreeName(String dname) {
         if (dname.equalsIgnoreCase("Eng")) {
             return "BA in " + dname;
@@ -14,8 +27,11 @@ public class UniDB {
 
     private static void formatStudent(int sid) {
         try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            Connection con = DriverManager.getConnection("jdbc:mysql://localhost/hw3", "root", "Neongourami123!");
+            // Class.forName("com.mysql.cj.jdbc.Driver");
+            // Connection con = DriverManager.getConnection("jdbc:mysql://localhost/hw3",
+            // "root", "root");
+
+            Connection con = getConnection();
 
             Statement stmt = con.createStatement();
 
@@ -98,8 +114,11 @@ public class UniDB {
     private static double getGPA(int sid) {
         double gpa = 0;
         try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            Connection con = DriverManager.getConnection("jdbc:mysql://localhost/hw3", "root", "Neongourami123!");
+            // Class.forName("com.mysql.cj.jdbc.Driver");
+            // Connection con = DriverManager.getConnection("jdbc:mysql://localhost/hw3",
+            // "root", "root");
+
+            Connection con = getConnection();
 
             Statement stmt = con.createStatement();
 
@@ -133,8 +152,11 @@ public class UniDB {
     private static int getCredits(int sid) {
         int totalCredits = 0;
         try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            Connection con = DriverManager.getConnection("jdbc:mysql://localhost/hw3", "root", "Neongourami123!");
+            // Class.forName("com.mysql.cj.jdbc.Driver");
+            // Connection con = DriverManager.getConnection("jdbc:mysql://localhost/hw3",
+            // "root", "root");
+
+            Connection con = getConnection();
 
             Statement stmt = con.createStatement();
             ResultSet rs = stmt.executeQuery(
@@ -155,8 +177,11 @@ public class UniDB {
     // Query 1
     private static void searchName() {
         try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            Connection con = DriverManager.getConnection("jdbc:mysql://localhost/hw3", "root", "Neongourami123!");
+            // Class.forName("com.mysql.cj.jdbc.Driver");
+            // Connection con = DriverManager.getConnection("jdbc:mysql://localhost/hw3",
+            // "root", "root");
+
+            Connection con = getConnection();
 
             Statement stmt = con.createStatement();
 
@@ -188,8 +213,11 @@ public class UniDB {
     // Query 2
     private static void searchYear() {
         try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            Connection con = DriverManager.getConnection("jdbc:mysql://localhost/hw3", "root", "Neongourami123!");
+            // Class.forName("com.mysql.cj.jdbc.Driver");
+            // Connection con = DriverManager.getConnection("jdbc:mysql://localhost/hw3",
+            // "root", "root");
+
+            Connection con = getConnection();
 
             Statement stmt = con.createStatement();
 
@@ -249,8 +277,11 @@ public class UniDB {
     // Queries 3 + 4
     private static void searchGPA(int belowOrAbove) {
         try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            Connection con = DriverManager.getConnection("jdbc:mysql://localhost/hw3", "root", "Neongourami123!");
+            // Class.forName("com.mysql.cj.jdbc.Driver");
+            // Connection con = DriverManager.getConnection("jdbc:mysql://localhost/hw3",
+            // "root", "root");
+
+            Connection con = getConnection();
 
             Statement stmt = con.createStatement();
 
@@ -302,8 +333,11 @@ public class UniDB {
     // Query 5
     private static void searchDepartment() {
         try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            Connection con = DriverManager.getConnection("jdbc:mysql://localhost/hw3", "root", "Neongourami123!");
+            // Class.forName("com.mysql.cj.jdbc.Driver");
+            // Connection con = DriverManager.getConnection("jdbc:mysql://localhost/hw3",
+            // "root", "root");
+
+            Connection con = getConnection();
 
             Statement stmt = con.createStatement();
 
@@ -354,8 +388,11 @@ public class UniDB {
     // Query 6
     private static void searchClass() {
         try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            Connection con = DriverManager.getConnection("jdbc:mysql://localhost/hw3", "root", "Neongourami123!");
+            // Class.forName("com.mysql.cj.jdbc.Driver");
+            // Connection con = DriverManager.getConnection("jdbc:mysql://localhost/hw3",
+            // "root", "root");
+
+            Connection con = getConnection();
 
             Statement stmt = con.createStatement();
 
@@ -408,8 +445,11 @@ public class UniDB {
     // Query 7
     private static void arbitraryQuery() {
         try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            Connection con = DriverManager.getConnection("jdbc:mysql://localhost/hw3", "root", "Neongourami123!");
+            // Class.forName("com.mysql.cj.jdbc.Driver");
+            // Connection con = DriverManager.getConnection("jdbc:mysql://localhost/hw3",
+            // "root", "root");
+
+            Connection con = getConnection();
 
             Statement stmt = con.createStatement();
 
@@ -497,6 +537,7 @@ public class UniDB {
                 break;
             case 8:
                 System.out.println("Goodbye.");
+                System.out.println();
                 break;
             default:
                 System.out.println("Please enter a valid query (1-8)!");
