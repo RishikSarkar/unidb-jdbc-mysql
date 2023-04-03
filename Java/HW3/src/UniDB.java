@@ -7,7 +7,10 @@ public class UniDB {
     public static Connection getConnection() throws SQLException {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
+
+            // Change database url, user name, and password here
             Connection con = DriverManager.getConnection("jdbc:mysql://localhost/hw3", "root", "root");
+
             return con;
         } catch (Exception e) {
             System.out.println(e);
