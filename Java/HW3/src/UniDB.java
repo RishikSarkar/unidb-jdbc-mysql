@@ -3,13 +3,14 @@ import java.util.Scanner;
 
 @SuppressWarnings("resource")
 public class UniDB {
+    public static String url = "localhost/hw3";
+    public static String username = "root";
+    public static String password = "root";
 
     public static Connection getConnection() throws SQLException {
         try {
-            // Class.forName("com.mysql.cj.jdbc.Driver");
 
-            // Change database url, user name, and password here
-            Connection con = DriverManager.getConnection("jdbc:mysql://localhost/hw3", "root", "root");
+            Connection con = DriverManager.getConnection("jdbc:mysql://" + url, username, password);
 
             return con;
         } catch (Exception e) {
@@ -20,13 +21,13 @@ public class UniDB {
         return null;
     }
 
-    private static String degreeName(String dname) {
-        if (dname.equalsIgnoreCase("Eng")) {
-            return "BA in " + dname;
-        }
+    // private static String degreeName(String dname) {
+    // if (dname.equalsIgnoreCase("Eng")) {
+    // return "BA in " + dname;
+    // }
 
-        return "BS in " + dname;
-    }
+    // return "BS in " + dname;
+    // }
 
     private static void formatStudent(int sid) {
         try {
@@ -49,12 +50,12 @@ public class UniDB {
             ResultSet maj = stmt.executeQuery("SELECT dname FROM Majors WHERE sid=" + sid);
             if (majorCount == 1) {
                 maj.next();
-                System.out.println("Major: " + degreeName(maj.getString(1)));
+                System.out.println("Major: " + maj.getString(1));
             } else {
                 String major = "";
                 major += "Majors: ";
                 while (maj.next()) {
-                    major += degreeName(maj.getString(1));
+                    major += maj.getString(1);
                     if (!maj.isLast()) {
                         major += ", ";
                     }
@@ -524,6 +525,16 @@ public class UniDB {
     }
 
     public static void main(String args[]) {
+        if (args.length > 0) {
+            url = args[0];
+            username = args[1];
+
+            if (args.length > 2)
+                password = args[2];
+            else
+                password = "";
+        }
+
         System.out.println("Welcome to the university database. Queries available:");
         System.out.println("1. Search students by name.");
         System.out.println("2. Search students by year.");
